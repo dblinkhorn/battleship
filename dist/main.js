@@ -1,1 +1,1 @@
-(()=>{var r={138:r=>{r.exports=function(r,t){return r+t}}},t={};!function e(o){var n=t[o];if(void 0!==n)return n.exports;var p=t[o]={exports:{}};return r[o](p,p.exports,e),p.exports}(138)})();
+(()=>{var t={138:t=>{t.exports={ShipFactory:t=>({hitpoints:[],sunk:!1,hit(t){return this.hitpoints[t]=1},isSunk(t){return!!this.hitpoints.every((t=>1===t))&&(this.sunk=!0,!0)},createHitpoints:void(hitpoints.length=t)}),gameboard:(t,i)=>t+i}}},i={};!function r(s){var e=i[s];if(void 0!==e)return e.exports;var n=i[s]={exports:{}};return t[s](n,n.exports,r),n.exports}(138)})();
