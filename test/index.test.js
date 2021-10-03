@@ -11,6 +11,7 @@ test('object should have correct number of hitpoints (array length)', () => {
 
 const testShip = battleship.ShipFactory('Carrier', 5);
 testShip.hitpoints = [1,1,1,1,1];
+
 const testShip2 = battleship.ShipFactory('Carrier', 5);
 testShip2.hitpoints = [1,0,0,0,0];
 
@@ -29,20 +30,39 @@ test('hit() method should set 0 index of hitpoints array to a 1', () => {
   expect(testShip.hit(0)).toBe(testShip.hitpoints[0] = 1);
 });
 
-const testCoords = [[1,1], [1,2], [1,3], [1,4], [1,5]];
-const testCarrier = battleship.ShipFactory('Carrier', 5);
-const testBoard = gameboard(testCarrier);
-
-// tests that gameboard creates object with proper methods & keys/values
-test('gameboard object should have correct methods & keys/values', () => {
-  expect(battleship.gameboard(testCarrier)).toMatchObject({
-    createShip(coords) {
-      let newShip = {[`${ship.shipName}`]: coords}
+// tests that gameboard() returns proper keys/values/methods
+test('gameboard() should return correct gameboard object', () => {
+  expect(JSON.stringify(battleship.gameboard())).toBe(JSON.stringify({
+    createShip(ship, coords) {
+      let newShip = {[`${ship.shipName}`]: coords};
       Object.assign(this.ships, newShip);
-      console.log(newShip);
+      return newShip;
     },
-    ships: {
-      Carrier: testCoords,
-    },
+    ships: {},
+  }));
+});
+
+const testCarrier = battleship.ShipFactory('Carrier', 5);
+const testCoords = [[1,1], [1,2], [1,3], [1,4], [1,5]];
+
+const testDestroyer = battleship.ShipFactory('Destroyer', 4);
+const testCoords2 = [[2,1], [2,2], [2,3], [2,4]];
+
+
+// tests that createShip method creates returns correct ship object
+test("gameboard()'s createShip method should return ship object", () => {
+  expect(battleship.gameboard().createShip(testCarrier, testCoords)).toMatchObject({
+    Carrier: [[1,1], [1,2], [1,3], [1,4], [1,5]]
   });
+});
+
+const testBoard = battleship.gameboard();
+testBoard.createShip(testCarrier, testCoords);
+testBoard.createShip(testDestroyer, testCoords2)
+
+const testAttack = [1,1];
+
+// tests that receiveAttack method can correctly determine if coords are a hit
+test("gameboard()'s receiveAttack method should return true on hit", () => {
+  expect(testBoard.receiveAttack(testAttack)).toBe(true);
 });
