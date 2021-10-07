@@ -3,6 +3,7 @@ const ShipFactory = (shipName, shipLength) => ({
   shipName: `${shipName}`,
   hitpoints: Array(shipLength).fill(0),
   sunk: false,
+  coords: [],
   // records position of ship hit
   hit(position) {
     return this.hitpoints[position] = 1;
@@ -29,22 +30,38 @@ function deepEqual(x, y) {
 // creates gameboard instances one for each player
 // stores ship names and coordinates of locations on board
 const gameboard = () => ({
-  // adds a new ship/coords to board
-  createShip(ship, coords) {
-    let newShip = {[`${ship.shipName}`]: coords};
-    Object.assign(this.ships, newShip);
+  // adds a new ship to board & sets coords
+  createShip(ship, length, shipCoords) {
+    let newShip = ShipFactory(ship, length);
+    newShip.coords.push(shipCoords)
+    this.ships.push(newShip)
     return newShip;
   },
-  // determines whether enemy shot is a hit
+  // determines whether enemy shot is a hit and initiates
+  // hit method to change hitpoint of struck ship
+
+  //
+  // need to get below loop to STOP once a hit is found OR push coords to misses array
+  //
   receiveAttack(coords) {
-    shipCoords = Object.values(this.ships)
-    for (ship of shipCoords) {
-      for (hitpoint of ship) {
-        return (deepEqual(coords, hitpoint));
+    for (ship in this.ships) {
+      for (coord of this.ships[ship].coords) {
+        console.log(coord)
+        for (hitpoint of coord) {
+          let coordIndex = coord.indexOf(hitpoint)
+          console.log(coordIndex)
+          if (deepEqual(coords, coord[coordIndex])) {
+            return this.ships[ship].hitpoints[coordIndex] = 1;
+          } else {
+            this.misses.push(coords);
+            console.log(this.misses);
+          }
+        }
       }
     }
   },
-  ships: {},
+  ships: [],
+  misses: [],
 })
 
 module.exports = { ShipFactory, gameboard }
