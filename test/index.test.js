@@ -46,7 +46,7 @@ test('gameboard() should return correct gameboard object', () => {
 
 const testBoard = battleship.gameboard();
 
-const testAttack = [1,4];
+const testAttack = [1,3];
 const testAttack2 = [1,7];
 
 // tests that gameboard() createShip method properly utilizes ShipFactory
@@ -72,9 +72,15 @@ test("gameboard()'s createShip method adds created ship to its ships array", () 
   );
 });
 
+// testBoard.createShip('Destroyer', 4, [[2,1], [2,2], [2,3], [2,4], [2,5]]);
+console.log(testBoard.ships)
+
 // tests that receiveAttack method can correctly determine if coords are a hit
 test("gameboard()'s receiveAttack method should return true on hit", () => {
-  expect(testBoard.receiveAttack(testAttack)).toBe(testBoard.ships[ship].hitpoints[hitpoint] = 1);
+  expect(testBoard.receiveAttack(testAttack)).toBe(
+    // testBoard.ships[ship].hitpoints[hitpoint] = 1
+    true
+    );
 });
 
 // test("gameboard()'s receiveAttack method should return false on miss", () => {
