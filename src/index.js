@@ -44,12 +44,17 @@ const gameboard = () => ({
   // need to get below loop to STOP once a hit is found OR push coords to misses array
   //
   receiveAttack(coords) {
+    console.log(this.ships);
     for (let ship = 0; ship < this.ships.length; ship++) {
-      for (let coord = 0; coord < this.ships[ship].coords[ship].length; coord++) {
-        console.log(this.ships[ship].coords[ship][coord])
-        console.log(deepEqual(coords, this.ships[ship].coords[ship][coord]))
-        if (deepEqual(coords, this.ships[ship].coords[ship][coord])) {
-          return true;
+      console.log(this.ships[ship]);
+      for (let shipCoords = 0; shipCoords < this.ships[ship].coords.length; shipCoords++) {
+        console.log(this.ships[ship].coords[shipCoords]);
+        for (let coord = 0; coord < this.ships[ship].coords[shipCoords].length; coord++) {
+          console.log(this.ships[ship].coords[shipCoords][coord])
+          if (deepEqual(coords, this.ships[ship].coords[shipCoords][coord])) {
+            console.log('true');
+            return true;
+          }
         }
       }
     }
