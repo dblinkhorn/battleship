@@ -40,24 +40,20 @@ const gameboard = () => ({
   // determines whether enemy shot is a hit and initiates
   // hit method to change hitpoint of struck ship
 
-  //
-  // need to get below loop to STOP once a hit is found OR push coords to misses array
-  //
+
+  // checks hitpoint coordinates of all ships on gameboard to determine if an attack's coordinates hit a ship
   receiveAttack(coords) {
-    console.log(this.ships);
-    for (let ship = 0; ship < this.ships.length; ship++) {
-      console.log(this.ships[ship]);
-      for (let shipCoords = 0; shipCoords < this.ships[ship].coords.length; shipCoords++) {
-        console.log(this.ships[ship].coords[shipCoords]);
-        for (let coord = 0; coord < this.ships[ship].coords[shipCoords].length; coord++) {
-          console.log(this.ships[ship].coords[shipCoords][coord])
+    for (let ship in this.ships) {
+      for (let shipCoords in this.ships[ship].coords) {
+        for (let coord in this.ships[ship].coords[shipCoords]) {
           if (deepEqual(coords, this.ships[ship].coords[shipCoords][coord])) {
-            console.log('true');
             return true;
           }
         }
       }
     }
+    this.misses.push(coords);
+    return false;
   },
   ships: [],
   misses: [],

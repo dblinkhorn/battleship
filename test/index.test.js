@@ -51,7 +51,7 @@ const testAttack2 = [1,7];
 
 // tests that gameboard() createShip method properly utilizes ShipFactory
 // and places created ship in ship object within gameboard()
-test.skip("gameboard()'s createShip method adds created ship to its ships array", () => {
+test("gameboard()'s createShip method adds created ship to its ships array", () => {
   expect(JSON.stringify(testBoard.createShip('Carrier', 5, [[1,1], [1,2], [1,3], [1,4], [1,5]]))).toBe(JSON.stringify(
     {
       shipName: 'Carrier',
@@ -77,12 +77,9 @@ testBoard.createShip('Destroyer', 4, [[2,1], [2,2], [2,3], [2,4]]);
 
 // tests that receiveAttack method can correctly determine if coords are a hit
 test("gameboard()'s receiveAttack method should return true on hit", () => {
-  expect(testBoard.receiveAttack(testAttack)).toBe(
-    // testBoard.ships[ship].hitpoints[hitpoint] = 1
-    true
-    );
+  expect(testBoard.receiveAttack(testAttack)).toBe(true);
 });
 
-// test("gameboard()'s receiveAttack method should return false on miss", () => {
-//   expect(testBoard.receiveAttack(testAttack2)).toBe(false);
-// });
+test("gameboard()'s receiveAttack method should return false on miss", () => {
+  expect(testBoard.receiveAttack(testAttack2)).toBe(false);
+});
