@@ -5,11 +5,11 @@ const ShipFactory = (shipName, shipLength) => ({
   sunk: false,
   coords: [],
   // records position of ship hit
-  hit(position) {
-    return this.hitpoints[position] = 1;
+  hit(hitpoint) {
+    return this.hitpoints[hitpoint] = 1;
   },
   // determines whether all of a ship's points have been hit
-  isSunk(hitpoints) {
+  isSunk() {
     if (this.hitpoints.every(hit => hit === 1)) {
       this.sunk = true;
       return true;
@@ -37,25 +37,34 @@ const gameboard = () => ({
     this.ships.push(newShip)
     return newShip;
   },
-  // determines whether enemy shot is a hit and initiates
-  // hit method to change hitpoint of struck ship
-
-
   // checks hitpoint coordinates of all ships on gameboard to determine if an attack's coordinates hit a ship
   receiveAttack(coords) {
     for (let ship in this.ships) {
       for (let shipCoords in this.ships[ship].coords) {
         for (let coord in this.ships[ship].coords[shipCoords]) {
           if (deepEqual(coords, this.ships[ship].coords[shipCoords][coord])) {
+            // runs hit method for struck ship to mark corresponding hitpoint
+            this.ships[ship].hit(coord);
             return true;
           }
         }
       }
     }
+    // sends coordinates of missed attack to misses array
     this.misses.push(coords);
     return false;
   },
+  // checks whether all ships on the gameboard have been sunk
+  allSunk() {
+    this.ships.forEach(ship => {
+      if (ship.isSunk()) {
+        console.log(ship.hitpoints)
+        console.log(`${ship.shipName} is sunk`)
+      }
+    })
+  },
   ships: [],
+  // stores missed attacks
   misses: [],
 })
 
