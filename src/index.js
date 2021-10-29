@@ -45,6 +45,7 @@ const gameboard = () => ({
           if (deepEqual(coords, this.ships[ship].coords[shipCoords][coord])) {
             // runs hit method for struck ship to mark corresponding hitpoint
             this.ships[ship].hit(coord);
+            this.ships[ship].isSunk();
             return true;
           }
         }
@@ -55,13 +56,15 @@ const gameboard = () => ({
     return false;
   },
   // checks whether all ships on the gameboard have been sunk
+
+  // UNFINISHED, NOT WORKING YET
   allSunk() {
-    this.ships.forEach(ship => {
-      if (ship.isSunk()) {
-        console.log(ship.hitpoints)
-        console.log(`${ship.shipName} is sunk`)
+    for (let ship in this.ships) {
+      console.log(this.ships[ship].sunk)
+      if (this.ships[ship].sunk === false) {
+        break;
       }
-    })
+    }
   },
   ships: [],
   // stores missed attacks

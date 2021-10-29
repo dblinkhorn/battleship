@@ -84,8 +84,11 @@ test("gameboard()'s receiveAttack method should return false on miss", () => {
   expect(testBoard.receiveAttack(testAttack2)).toBe(false);
 });
 
-for (let hitpoint in testBoard.ships[0].hitpoints) {
-  testBoard.ships[0].hitpoints[hitpoint] = 1;
+for (let ship in testBoard.ships) {
+  for (let hitpoint in testBoard.ships[ship].hitpoints) {
+    testBoard.ships[ship].hitpoints[hitpoint] = 1;
+  }
+  testBoard.ships[ship].isSunk();
 }
 
 // tests whether allSunk method determines whether all ships on gameboard have been sunk
