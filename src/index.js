@@ -56,14 +56,18 @@ const gameboard = () => ({
     return false;
   },
   // checks whether all ships on the gameboard have been sunk
-
-  // UNFINISHED, NOT WORKING YET
   allSunk() {
+    shipsAfloat = true;
     for (let ship in this.ships) {
       console.log(this.ships[ship].sunk)
-      if (this.ships[ship].sunk === false) {
+      if (!this.ships[ship].sunk) {
+        shipsAfloat = false;
+        console.log(this.ships[ship]);
         break;
       }
+    }
+    if (shipsAfloat) {
+      return true;
     }
   },
   ships: [],
