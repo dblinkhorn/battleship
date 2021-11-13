@@ -27,8 +27,8 @@ function deepEqual(x, y) {
   ) : (x === y);
 }
 
-// creates gameboard instances one for each player
-// stores ship names and coordinates of locations on board
+// creates gameboard instances, one for each player
+// stores ship names and coordinates of locations on boards
 const gameboard = () => ({
   // adds a new ship to board & sets coords
   createShip(ship, length, shipCoords) {
